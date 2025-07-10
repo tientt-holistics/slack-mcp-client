@@ -19,6 +19,13 @@
         "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
         "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
       }
+    },
+    "holistics": {
+      "url": "http://localhost:3000/api/v2/mcp",
+      "headers": {
+        "X-Holistics-Key": "<HOLISTICS_API_KEY>"
+      },
+      "mode": "http"
     }
   }
-} 
+}

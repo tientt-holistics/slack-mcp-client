@@ -357,7 +357,7 @@ func createMCPClient(logger *logging.Logger, serverConf config.ServerConfig, _ *
 		logger.InfoKV("Creating MCP client", "mode", mode, "address", serverConf.URL)
 
 		// Use the imported mcp.NewClient from internal/mcp/client.go with structured logger
-		mcpClient, createErr := mcp.NewClient(mode, serverConf.URL, nil, nil, logger)
+		mcpClient, createErr := mcp.NewClient(mode, serverConf.URL, nil, nil, serverConf.Headers, logger)
 		if createErr != nil {
 			logger.Error("Failed to create MCP client for URL %s: %v", serverConf.URL, createErr)
 			// Create a domain-specific error with additional context
@@ -397,7 +397,7 @@ func createMCPClient(logger *logging.Logger, serverConf config.ServerConfig, _ *
 
 		// Create the MCP client
 		logger.DebugKV("Executing command", "command", serverConf.Command, "args", serverConf.Args, "env", env)
-		mcpClient, createErr := mcp.NewClient(mode, serverConf.Command, serverConf.Args, env, logger)
+		mcpClient, createErr := mcp.NewClient(mode, serverConf.Command, serverConf.Args, env, serverConf.Headers, logger)
 		if createErr != nil {
 			logger.Error("Failed to create MCP client: %v", createErr)
 			// Create a domain-specific error with additional context

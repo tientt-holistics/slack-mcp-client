@@ -13,6 +13,7 @@ import (
 
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/mcp"
+	"github.com/mark3labs/mcp-go/client/transport"
 
 	customErrors "github.com/tuannvm/slack-mcp-client/internal/common/errors"
 	"github.com/tuannvm/slack-mcp-client/internal/common/logging"
@@ -38,7 +39,7 @@ type Client struct {
 // NewClient creates a new MCP client handler.
 // For stdio mode, addressOrCommand should be the command path, and args should be provided.
 // For http/sse modes, addressOrCommand is the URL, and args is ignored.
-func NewClient(mode, addressOrCommand string, args []string, env map[string]string, stdLogger *logging.Logger) (*Client, error) {
+func NewClient(mode, addressOrCommand string, args []string, env map[string]string, headers map[string]string, stdLogger *logging.Logger) (*Client, error) {
 	// Determine log level from environment variable
 	logLevel := logging.LevelInfo // Default to INFO
 	if envLevel := os.Getenv("LOG_LEVEL"); envLevel != "" {
@@ -86,7 +87,7 @@ func NewClient(mode, addressOrCommand string, args []string, env map[string]stri
 			return nil, customErrors.WrapMCPError(err, "client_start", fmt.Sprintf("Failed to start MCP client for %s", addressOrCommand))
 		}
 	case "http":
-		mcpClient, err = client.NewStreamableHttpClient(addressOrCommand)
+		mcpClient, err = client.NewStreamableHttpClient(addressOrCommand, transport.WithHTTPHeaders(headers))
 		if err != nil {
 			return nil, customErrors.WrapMCPError(err, "client_creation", fmt.Sprintf("Failed to create MCP client for %s", addressOrCommand))
 		}

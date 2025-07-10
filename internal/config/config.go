@@ -50,6 +50,7 @@ type ServerConfig struct {
 	Env                      map[string]string `json:"env,omitempty"`                        // Environment variables
 	Disabled                 bool              `json:"disabled,omitempty"`                   // Whether this server is disabled
 	InitializeTimeoutSeconds *int              `json:"initialize_timeout_seconds,omitempty"` // Timeout for server initialization
+	Headers                  map[string]string `json:"headers,omitempty"`                    // Headers to send with the request
 
 	AllowList []string `json:"allow_list,omitempty"` // List of allowed tools
 	BlockList []string `json:"block_list,omitempty"` // List of blocked tools
